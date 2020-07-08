@@ -393,7 +393,7 @@ class SentenceTransformer(nn.Sequential):
                     else:
                         loss_value.backward()
                         torch.nn.utils.clip_grad_norm_(loss_model.parameters(), max_grad_norm)
-                        tqdmSteps.set_postfix('loss: %f' % loss_value)
+                    tqdmSteps.set_postfix({'loss': loss_value.item()})
 
                     optimizer.step()
                     scheduler.step()
