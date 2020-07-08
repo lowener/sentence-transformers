@@ -367,8 +367,8 @@ class SentenceTransformer(nn.Sequential):
             for loss_model in loss_models:
                 loss_model.zero_grad()
                 loss_model.train()
-
-            for _ in tqdm(range(steps_per_epoch), desc="Iteration", smoothing=0.05):
+            tqdmSteps = tqdm(range(steps_per_epoch), desc="Iteration", smoothing=0.05)
+            for _ in tqdmSteps:
                 for train_idx in range(num_train_objectives):
                     loss_model = loss_models[train_idx]
                     optimizer = optimizers[train_idx]
@@ -393,6 +393,7 @@ class SentenceTransformer(nn.Sequential):
                     else:
                         loss_value.backward()
                         torch.nn.utils.clip_grad_norm_(loss_model.parameters(), max_grad_norm)
+                        tqdmSteps.set_postfix('loss: %f' % loss_value)
 
                     optimizer.step()
                     scheduler.step()
