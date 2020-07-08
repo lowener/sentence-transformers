@@ -361,7 +361,8 @@ class SentenceTransformer(nn.Sequential):
 
         num_train_objectives = len(train_objectives)
 
-        for epoch in tqdm(epochs, desc="Epoch"):
+        for epoch in range(epochs):
+            print(epoch)
             training_steps = 0
 
             for loss_model in loss_models:
